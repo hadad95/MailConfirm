@@ -6,7 +6,6 @@
 - (void)send:(id)arg1 {
 	NSString *email = MSHookIvar<NSString *>(self, "_sendingEmailAddress");
 	NSString *msg = [NSString stringWithFormat:@"You are about to send an email as %@\nAre you sure?", email];
-	NSLog(@"First event called! %@", email);
 	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sending"
 		message:msg
 		preferredStyle:UIAlertControllerStyleAlert];
