@@ -1,11 +1,20 @@
+#import <Cephei/HBPreferences.h>
+
 @interface MFMailComposeController
 - (void)send:(id)arg1;
 @end
 
+BOOL enabled;
+
 %hook MFMailComposeController
 - (void)send:(id)arg1 {
+	if (!enabled) {
+		%orig;
+		return;
+	}
+	
 	NSString *email = MSHookIvar<NSString *>(self, "_sendingEmailAddress");
-	NSString *msg = [NSString stringWithFormat:@"You are about to send an email as %@\nAre you sure?", email];
+	NSString *msg = [NSString stringWithFormat:@"You are about to send an email with the following account:\n%@\n\nAre you sure?", email];
 	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sending"
 		message:msg
 		preferredStyle:UIAlertControllerStyleAlert];
@@ -21,3 +30,8 @@
 	[[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:alert animated:YES completion:nil];
 }
 %end
+
+%ctor {
+	HBPreferences *prefs = [[HBPreferences alloc] initWithIdentifier:@"com.kef.mailconfirm"];
+	[prefs registerBool:&enabled default:YES forKey:@"enabled"];
+}
