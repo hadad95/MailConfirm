@@ -1,7 +1,7 @@
 Package: com.kef.mailconfirm
 Name: MailConfirm
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11)
-Version: 1.0.2
+Version: 1.0.3
 Architecture: iphoneos-arm
 Description: Pops up a confirmation dialogue before you send emails.
 Maintainer: Kef
