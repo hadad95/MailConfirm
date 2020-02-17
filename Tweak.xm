@@ -1,13 +1,16 @@
 #import <Cephei/HBPreferences.h>
 
 @interface MFMailComposeController
+- (void)sendMessage;
 - (void)send:(id)arg1;
+- (id)sendingEmailAddress;
 @end
 
 BOOL enabled;
 
 %hook MFMailComposeController
-- (void)send:(id)arg1 {
+- (void)sendMessage {
+	NSLog(@"result = %@", [self sendingEmailAddress]);
 	if (!enabled) {
 		%orig;
 		return;
